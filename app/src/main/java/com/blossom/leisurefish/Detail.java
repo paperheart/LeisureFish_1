@@ -7,19 +7,29 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.temporal.IsoFields;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
+
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
 
@@ -32,8 +42,8 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
     private SurfaceHolder holder;
     private MediaPlayer mediaPlayer = null;
     private SeekBar seekBar;
-
-
+    private ProgressBar progressBar;
+    private int pre = 0,now = 0;
     private Handler handlerPlay = new Handler();
     private Handler handlerPause = new Handler();
 
@@ -41,13 +51,14 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
     private final int PLAYING = 1;
     private final int PAUSING = 2;
     private final int STOPING = 3;
-
+    private TimerTask task = null;
     private boolean touchAble = true;
     private int state = NORMAL;
     private boolean isStopUpdatingProgress = false;
-
+    private boolean isFirstTime = true;
+    private ImageButton love;
     private Intent intent;
-
+    private  Timer mtimer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +72,17 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
         SurfaceView surfaceView = findViewById(R.id.sv);
         holder = surfaceView.getHolder();
         seekBar = findViewById(R.id.sb_1);
-
+        progressBar = findViewById(R.id.pb_1);
+        love = findViewById(R.id.ib_love);
 
         ib_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ib_play.setVisibility(View.INVISIBLE);
+                ib_play.setVisibility(INVISIBLE);
+                if(isFirstTime){
+                    isFirstTime = false;
+                    progressBar.setVisibility(VISIBLE);
+                }
                 touchAble = true;
                 start();
             }
@@ -74,41 +90,74 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
         ib_pausing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ib_pausing.setVisibility(View.INVISIBLE);
-                ib_play.setVisibility(View.VISIBLE);
+                ib_pausing.setVisibility(INVISIBLE);
+                ib_play.setVisibility(VISIBLE);
                 touchAble = true;
                 pause();
             }
         });
-        surfaceView.setOnClickListener(new View.OnClickListener() {
+        surfaceView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                    if(state == PLAYING){
-                        if(ib_pausing.getVisibility() == View.INVISIBLE){
-                            ib_pausing.setVisibility(View.VISIBLE);
-                            handlerPause.postDelayed(runnablePause,2000);
-                        }
-                        else{
-                            ib_pausing.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                    else{
-                        if(ib_play.getVisibility() == View.INVISIBLE){
-                            ib_play.setVisibility(View.VISIBLE);
-                            handlerPlay.postDelayed(runnablePlay,2000);
-                        }
-                        else{
-                            ib_play.setVisibility(View.INVISIBLE);
-                        }
+            public boolean onTouch(View v, MotionEvent event) {
+                pre = now;
+                String timeStamp = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
 
-                    }
+                timeStamp = timeStamp.substring(8,16);
+                now = Integer.valueOf(timeStamp);
+                if(Math.abs(now - pre) <= 50)
+                {
+                    mtimer.cancel();
+                    task.cancel();
+                    mtimer = new Timer();
+                    love.setX(event.getX()-100);
+                    love.setY(event.getY()-100);
+                    love.setVisibility(VISIBLE);
+                    new Handler().postDelayed(new Runnable(){
+                        public void run() {
+                            love.setVisibility(INVISIBLE);
+                        }
+                    },2000);
+
+                }
+                else
+                {
+
+                        task = new TimerTask() {
+                            public void run() {
+                                if(state == PLAYING){
+                                    if(ib_pausing.getVisibility() == INVISIBLE){
+
+                                        handlerPause.post(runnableToPause);
+                                        handlerPause.postDelayed(runnablePause,2000);
+                                    }
+                                    else{
+                                        handlerPause.post(runnablePause);
+                                    }
+                                }
+                                else{
+                                    if(ib_play.getVisibility() == INVISIBLE){
+                                        handlerPlay.post(runnableToPlay);
+                                        handlerPlay.postDelayed(runnablePlay,2000);
+                                    }
+                                    else{
+                                        handlerPlay.post(runnablePlay);
+                                    }
+
+                                }
+                            }
+                        };
+
+                    mtimer = new Timer();
+                    mtimer.schedule(task, 200);
+                }
+                return false;
             }
         });
 
         intent = getIntent();
         user_id.setText(user_id.getText().toString() + intent.getStringExtra( "USER_ID"));
         user_name.setText(user_name.getText().toString() +
-                intent.getStringExtra(user_name.getText().toString() + "USER_NAME"));
+                intent.getStringExtra( "USER_NAME"));
 
 
     }
@@ -129,14 +178,23 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
         String url = intent.getStringExtra("VIDEO_URL");
         //<TODO>二次建对象mediaPlayer是什么操作...
         mediaPlayer = new MediaPlayer();
+
         try {
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setDisplay(holder);
 
-            mediaPlayer.setDataSource(url);
-            mediaPlayer.prepare();
-            mediaPlayer.start();
 
+            mediaPlayer.setDataSource(url);
+
+
+            mediaPlayer.prepareAsync();
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    progressBar.setVisibility(INVISIBLE);
+                }
+            });
+            mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(this);
 
             state = PLAYING;
@@ -164,7 +222,7 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        Toast.makeText(this,"Finished,play again",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"Finished,play again",Toast.LENGTH_SHORT).show();
         state = PLAYING;
         mediaPlayer.start();
     }
@@ -173,19 +231,31 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
     Runnable runnablePause = new Runnable() {
         @Override
         public void run() {
-            ib_pausing.setVisibility(View.INVISIBLE);
+            ib_pausing.setVisibility(INVISIBLE);
+        }
+    };
+    Runnable runnableToPause = new Runnable() {
+        @Override
+        public void run() {
+            ib_pausing.setVisibility(VISIBLE);
         }
     };
 
     Runnable runnablePlay = new Runnable() {
         @Override
         public void run() {
-            ib_play.setVisibility(View.INVISIBLE);
+            ib_play.setVisibility(INVISIBLE);
+        }
+    };
+    Runnable runnableToPlay = new Runnable() {
+        @Override
+        public void run() {
+            ib_play.setVisibility(VISIBLE);
         }
     };
 
     @Override
-     protected void onDestroy() {
+    protected void onDestroy() {
         // 在activity结束的时候回收资源
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();

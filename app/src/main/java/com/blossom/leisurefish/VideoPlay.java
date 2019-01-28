@@ -60,13 +60,13 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
     private boolean touchAble = true;
     private int state = NORMAL;
     private boolean isStopUpdatingProgress = false;
-    private Button post;
+    private ImageButton post;
     public Intent intent;
     public String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.video_play);
+        setContentView(R.layout.play_video);
         ib_pausing = findViewById(R.id.ib_pause);
         ib_play = findViewById(R.id.ib_play);
         SurfaceView surfaceView = findViewById(R.id.sv);
@@ -92,7 +92,7 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
             File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
             try {
                 FileOutputStream out = new FileOutputStream(pictureFile);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 50, out);
                 out.flush();
                 out.close();
             } catch (FileNotFoundException e) {
@@ -148,6 +148,7 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
             state = PLAYING;
             return;
         }
+        isStopUpdatingProgress = false;
         play();
     }
 
@@ -167,6 +168,7 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
 
             state = PLAYING;
 
+            seekBar.setMax(mediaPlayer.getDuration());
             isStopUpdatingProgress = false;
             new Thread(new UpdateProgressRunnable()).start();
         } catch (IOException e) {
