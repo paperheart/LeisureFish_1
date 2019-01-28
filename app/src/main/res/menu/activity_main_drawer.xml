@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item android:title="About us">
+        <menu>
+            <item
+                android:id="@+id/human_1"
+                android:icon="@drawable/smile"
+                android:title="王星煜" >
+            </item>
+
+            <item
+                android:id="@+id/human_2"
+                android:icon="@drawable/smile"
+                android:title="俞振杰" />
+        </menu>
+    </item>
+
+</menu>

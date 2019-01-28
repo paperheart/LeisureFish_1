@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <SurfaceView
+        android:id="@+id/surView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/sur_holder"
+        android:padding="20dp"
+        >
+
+
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/sync"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@android:color/transparent"
+            >
+        </ImageButton>
+
+            />
+        <ImageButton
+            android:id="@+id/picture_shoot"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/icon_2"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            />
+
+        <ImageButton
+            android:id="@+id/change"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/camera"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:clickable="true"
+            android:alpha="255"
+            />
+        <ImageButton
+            android:id="@+id/video_shoot"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/start"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:visibility="visible">
+        </ImageButton>
+
+
+
+    </RelativeLayout>
+    <SeekBar
+        android:id="@+id/timebar"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:max="100"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:clickable="false"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/design_default_color_primary"
+        />
+
+
+</RelativeLayout>
