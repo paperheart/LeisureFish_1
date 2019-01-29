@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.ActivityCompat;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -86,7 +87,14 @@ public class MainActivity extends AppCompatActivity
             @Override
                       public void onClick(View view) {
                 try {
-                    startActivity(new Intent(MainActivity.this, CameraActivity.class));
+
+
+                    Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                    intent.putExtra("USER_NAME",((EditText)findViewById(R.id.et_name)).getText().toString());
+                    intent.putExtra("USER_ID",((EditText)findViewById(R.id.et_id)).getText().toString());
+                    Toast.makeText(MainActivity.this, ((EditText)findViewById(R.id.et_name)).getText()+" "+((EditText)findViewById(R.id.et_id)).getText(), Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+
                 }catch (Exception e)
                 {
                     Toast.makeText(MainActivity.this,"Click failed",Toast.LENGTH_LONG).show();
@@ -163,5 +171,9 @@ public class MainActivity extends AppCompatActivity
                 enqueue(callback);
     }
 
-
+    @Override
+    public void onResume() {
+        fetchFeed();
+        super.onResume();
+    }
 }

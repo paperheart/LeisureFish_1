@@ -31,6 +31,8 @@ import static android.widget.Toast.LENGTH_LONG;
 public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
     private int CAMERA_TYPE = Camera.CameraInfo.CAMERA_FACING_FRONT;
+    private String name;
+    private String id;
     private Camera mCamera;
     private int rotationDegree;
     private SurfaceView mSurfaceView;
@@ -43,6 +45,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     private ImageButton picture_shoot;
     private ImageButton change_button;
     //private com.blossom.leisurefish.CircleButtonView circleButtonView;
+    Intent intent_1;
     boolean islong = false;
     private CountDownTimer mTimer;
     private SeekBar timebar;
@@ -53,7 +56,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.camera_activity);
-
+        intent_1 = getIntent();
+        name = intent_1.getStringExtra("USER_NAME");
+        id = intent_1.getStringExtra("USER_ID");
         mCamera = getCamera(CAMERA_TYPE);
         video_shoot = findViewById(R.id.video_shoot);
         picture_shoot = findViewById(R.id.picture_shoot);
@@ -64,6 +69,8 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         SurfaceHolder holder = mSurfaceView.getHolder();
         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         holder.addCallback(this);
+
+
 
         findViewById(R.id.imageButton).setOnClickListener(v -> {
             CAMERA_TYPE = 1 - CAMERA_TYPE;
@@ -90,8 +97,14 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 timebar.setProgress(0);
                 mTimer.cancel();
 
+
+
+                Toast.makeText(CameraActivity.this, "Camera  "+name+" "+id, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(CameraActivity.this,VideoPlay.class);
                 intent.putExtra("URLforVideo",file_video.getAbsolutePath().toString());
+                intent.putExtra("USER_NAME",name);
+                intent.putExtra("USER_ID",id);
+
                 startActivity(intent);
                 finish();
 
@@ -114,7 +127,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 file_video = getOutputMediaFile(MEDIA_TYPE_VIDEO);
                 mMediaRecorder.setOutputFile(file_video.toString());
                 mMediaRecorder.setPreviewDisplay( mSurfaceView.getHolder().getSurface());
-                Toast.makeText(CameraActivity.this,String.valueOf(this.getResources().getConfiguration().orientation),Toast.LENGTH_LONG).show();
+
 
 
                 switch (this.getResources().getConfiguration().orientation)
@@ -132,7 +145,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                             case 0:mMediaRecorder.setOrientationHint(90);break;
                         }break;
                 }
-                Toast.makeText(CameraActivity.this,String.valueOf(rotationDegree),Toast.LENGTH_LONG).show();
+
                 isRecording = true;
                 try {
                     mMediaRecorder.prepare();
@@ -147,10 +160,12 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             if(video_shoot.getVisibility() == View.VISIBLE) {
                 video_shoot.setVisibility(View.INVISIBLE);
                 picture_shoot.setVisibility(View.VISIBLE);
+                change_button.setBackgroundResource(R.drawable.videoswitch);
             }
             else{
                 video_shoot.setVisibility(View.VISIBLE);
                 picture_shoot.setVisibility(View.INVISIBLE);
+                change_button.setBackgroundResource(R.drawable.camera);
             }
         });
 
@@ -162,15 +177,15 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     }
     private void initView() {
         if (mTimer == null) {
-            mTimer = new CountDownTimer((long) (12 * 1000), 1000) {
+            mTimer = new CountDownTimer((long) (10 * 1000), 100) {
 
                 @Override
                 public void onTick(long millisUntilFinished) {
                     if (!CameraActivity.this.isFinishing()) {
-                        int remainTime = (int) (millisUntilFinished / 1000L);
-                        Log.e("zpan","======remainTime=====" + remainTime);
-                        double scale = (double)(12- remainTime-2) * 10;
-                        timebar.setProgress((int)scale);
+                        double remainTime =  (millisUntilFinished / 100L);
+
+                        timebar.setProgress((int)(remainTime+2));
+                        //Toast.makeText(CameraActivity.this,String.valueOf((int)(remainTime*10)),Toast.LENGTH_LONG).show();
                     }
                 }
 

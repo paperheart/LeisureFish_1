@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/sur_holder"
-        android:padding="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         >
 
 
@@ -37,9 +38,9 @@
             />
         <ImageButton
             android:id="@+id/picture_shoot"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/icon_2"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/camerashoot"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
             android:visibility="invisible"
@@ -57,8 +58,8 @@
             />
         <ImageButton
             android:id="@+id/video_shoot"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@drawable/start"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
@@ -71,13 +72,15 @@
     <SeekBar
         android:id="@+id/timebar"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="10dp"
         android:max="100"
+        android:progress="100"
+        android:minHeight="6dip"
+        android:maxHeight="6dip"
+        android:layout_margin="5dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:clickable="false"
-        android:outlineAmbientShadowColor="@color/colorPrimary"
-        android:outlineSpotShadowColor="@color/design_default_color_primary"
+        android:progressDrawable="@drawable/seekbar"
+        android:thumb="@drawable/thumb"
         />
 
 

@@ -76,7 +76,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             ViewGroup.LayoutParams params = imageView.getLayoutParams();
             //设置图片的相对于屏幕的宽高比
             params.width = width/2;
-            params.height =  (int) (200 + Math.random() * 400) ;
+            params.height =  (int) (400 + Math.random() * 300) ;
             imageView.setLayoutParams(params);
         }
 

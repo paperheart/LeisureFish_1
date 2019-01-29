@@ -1,6 +1,7 @@
 package com.blossom.leisurefish;
 
 import android.content.Intent;
+import android.gesture.GestureOverlayView;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.media.MediaMetadataRetriever;
@@ -11,13 +12,20 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
+import android.view.GestureDetector.OnGestureListener;
 
 import com.blossom.leisurefish.newtork.IMiniDouyinService;
 import com.blossom.leisurefish.utils.ResourceUtils;
@@ -40,8 +48,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.blossom.leisurefish.CameraActivity.MEDIA_TYPE_IMAGE;
 import static com.blossom.leisurefish.CameraActivity.getOutputMediaFile;
 
-public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
-
+public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnCompletionListener, View.OnTouchListener,OnGestureListener {
+    private String name,id;
     private ImageButton ib_pausing;
     private ImageButton ib_play;
     private SurfaceHolder holder;
@@ -51,18 +59,20 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
     public Uri mSelectedImage;
     private Handler handlerPlay = new Handler();
     private Handler handlerPause = new Handler();
-
+    private ProgressBar progressBar;
     private final int NORMAL = 0;
     private final int PLAYING = 1;
     private final int PAUSING = 2;
     private final int STOPING = 3;
-
+    private GestureDetector mGestureDetector;
     private boolean touchAble = true;
     private int state = NORMAL;
     private boolean isStopUpdatingProgress = false;
-    private ImageButton post;
     public Intent intent;
     public String url;
+    private RelativeLayout relativeLayout;
+    private boolean Flingable = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +82,13 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
         SurfaceView surfaceView = findViewById(R.id.sv);
         holder = surfaceView.getHolder();
         seekBar = findViewById(R.id.sb_1);
-        post = findViewById(R.id.post);
         intent=getIntent();
+        progressBar = findViewById(R.id.progress_circular);
+
         url = intent.getStringExtra("URLforVideo");
+        name = getIntent().getStringExtra("USER_NAME");
+        id = getIntent().getStringExtra("USER_ID");
+
         mSelectedVideo = Uri.parse("file://"+url);
 
         ib_play.setOnClickListener(new View.OnClickListener() {
@@ -84,24 +98,6 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
                 touchAble = true;
                 start();
             }
-        });
-        post.setOnClickListener(v -> {
-            MediaMetadataRetriever media = new MediaMetadataRetriever();
-            media.setDataSource(url);
-            Bitmap bitmap = media.getFrameAtTime();
-            File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-            try {
-                FileOutputStream out = new FileOutputStream(pictureFile);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 50, out);
-                out.flush();
-                out.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mSelectedImage = Uri.fromFile(pictureFile);
-            postVideo();
         });
         ib_pausing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,8 +132,12 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
                 }
             }
         });
-
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        relativeLayout = findViewById(R.id.RL);
+        mGestureDetector = new GestureDetector(this);
+        surfaceView.setOnTouchListener(this);
+        surfaceView.setLongClickable(true);
 
     }
 
@@ -189,7 +189,6 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        Toast.makeText(this,"Finished,play again",Toast.LENGTH_SHORT).show();
         state = PLAYING;
         mediaPlayer.start();
     }
@@ -221,6 +220,74 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
         super.onDestroy();
     }
 
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+        Log.d("Text","Touched");
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        if(velocityY < -5000 && Math.abs(velocityX)<6000 && Flingable)
+        {
+            Flingable = false;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            });
+            MediaMetadataRetriever media = new MediaMetadataRetriever();
+            media.setDataSource(url);
+            Bitmap bitmap = media.getFrameAtTime();
+            File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+            try {
+                FileOutputStream out = new FileOutputStream(pictureFile);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 50, out);
+                out.flush();
+                out.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mSelectedImage = Uri.fromFile(pictureFile);
+            postVideo();
+        }
+        Log.d("Text",String.valueOf(velocityX)+" "+String.valueOf(velocityY));
+        return false;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        Log.d("Text","touched on onTouch");
+        return mGestureDetector.onTouchEvent(event);
+    }
+
     class UpdateProgressRunnable implements Runnable {
 
         @Override
@@ -228,7 +295,7 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
             while (!isStopUpdatingProgress) {
                 int currentPosition = mediaPlayer.getCurrentPosition();
                 seekBar.setProgress(currentPosition);
-                SystemClock.sleep(1000);
+                SystemClock.sleep(100);
             }
 
         }
@@ -246,7 +313,7 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
             @Override public void run(){
 
                 Uri myuri = mSelectedVideo;
-                Call<PostVideoResponse> call = iMiniDouyinService.creatVideo("1120170646","王星煜",
+                Call<PostVideoResponse> call = iMiniDouyinService.creatVideo(id,name,
                         getMultipartFromUri("cover_image",mSelectedImage),
                         getMultipartFromUri("video",mSelectedVideo));
 
@@ -254,21 +321,27 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
 
                     @Override
                     public void onResponse(Call<PostVideoResponse> call, Response<PostVideoResponse> response) {
-                        Log.d("aaa","4");
-                        runOnUiThread(
-                                ()->Toast.makeText(VideoPlay.this, "上传成功", Toast.LENGTH_SHORT).show()
-                        );
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(VideoPlay.this, "Video "+name+" "+id, Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.INVISIBLE);
+                                Flingable = true;
+                            }
+                        });
 
                     }
 
                     @Override
                     public void onFailure(Call<PostVideoResponse> call, Throwable t) {
-                        runOnUiThread(
-                                ()->Toast.makeText(VideoPlay.this, "上传失败", Toast.LENGTH_SHORT).show()
-                        );
-                        runOnUiThread(
-                                ()-> Toast.makeText(VideoPlay.this,"shibai",Toast.LENGTH_SHORT).show()
-                        );
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(VideoPlay.this, "上传失败", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.INVISIBLE);
+                                Flingable = true;
+                            }
+                        });
 
                     }
                 });

@@ -1,61 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<android.support.v7.widget.Toolbar
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
 
-</android.support.v7.widget.Toolbar>
-    <SurfaceView
-        android:id="@+id/sv"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-         />
-    <ImageButton
-        android:id="@+id/ib_pause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/pause_gray"
-        android:background="#00000000"
-        android:layout_centerInParent="true"
-        android:visibility="invisible"
-        />
-    <ImageButton
-        android:id="@+id/ib_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/play_gray"
-        android:background="#00000000"
-        android:layout_centerInParent="true"
-        android:visibility="visible" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="bottom">
+        android:id="@+id/RL"
+    >
 
-        <SeekBar
-            android:id="@+id/sb_1"
+        <SurfaceView
+            android:id="@+id/sv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="100"
+            android:layout_height="match_parent"
             />
-    </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="30dp"
+            android:paddingBottom="20dp"
+            >
+            <ImageButton
+                android:id="@+id/ib_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pause_gray"
+                android:background="#00000000"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"
+                />
+            <ImageButton
+                android:id="@+id/ib_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/play_gray"
+                android:background="#00000000"
+                android:layout_centerInParent="true"
+                android:visibility="visible" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="bottom">
 
-    <ImageButton
-        android:id="@+id/post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Post it!"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        />
+                <SeekBar
+                    android:id="@+id/sb_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:minHeight="6dip"
+                    android:maxHeight="6dip"
+                    android:layout_margin="5dp"
+                    android:layout_alignParentBottom="true"
+                    android:progressDrawable="@drawable/seekbar"
+                    android:thumb="@drawable/thumb"
+                    />
+            </RelativeLayout>
 
 
-</RelativeLayout>
+            <ProgressBar
+                android:id="@+id/progress_circular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"
+                style="@style/mProgress_circle"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+

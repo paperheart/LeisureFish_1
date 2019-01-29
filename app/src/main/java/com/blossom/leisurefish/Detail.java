@@ -191,6 +191,9 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
+                    int duration = mediaPlayer.getDuration();
+                    seekBar.setMax(duration);
+                    seekBar.setEnabled(false);
                     progressBar.setVisibility(INVISIBLE);
                 }
             });
@@ -199,9 +202,7 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
 
             state = PLAYING;
 
-            int duration = mediaPlayer.getDuration();
-            seekBar.setMax(duration);
-            seekBar.setEnabled(false);
+
             isStopUpdatingProgress = false;
             new Thread(new UpdateProgressRunnable()).start();
         } catch (IOException e) {
@@ -273,7 +274,7 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
             while (!isStopUpdatingProgress) {
                 int currentPosition = mediaPlayer.getCurrentPosition();
                 seekBar.setProgress(currentPosition);
-                SystemClock.sleep(1000);
+                SystemClock.sleep(100);
             }
 
         }
