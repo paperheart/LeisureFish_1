@@ -117,11 +117,10 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
                     mtimer.cancel();
                     task.cancel();
                     mtimer = new Timer();
-                    lottieLike.setX(event.getX());
-                    lottieLike.setY(event.getY());
+                    lottieLike.setX(event.getX()-200);
+                    lottieLike.setY(event.getY()-250);
                     lottieLike.setVisibility(VISIBLE);
                     animator.addUpdateListener(animation -> {
-                        //通过由0->1的变化模拟动画播放
                         lottieLike.setProgress((Float) animation.getAnimatedValue());
                     });
                     animator.start();
