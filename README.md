@@ -14,7 +14,8 @@ LeisureFish包含了Feed瀑布流展示、Feed流刷新、完备的基于mediapl
 短视频限长录制、实时视频提交与反馈、以及用户信息记录等功能，完成了基本的短视频APP应有功能，可以
 流畅地与用户进行互动。
 ### APP特点：
-简洁的用户界面、即时的互动反馈等等
+简洁的用户界面、即时的互动反馈等等<br>
+![image] (https://github.com/paperheart/LeisureFish_1/blob/master/image/BHV)ZQ9X48_YY1Q%60(_MJCLH.jpg)
 ## 成员分工
 ### 俞振杰
 完成视频的录制，上传，预览功能，双击点赞的算法实现，部分界面的UI设计优化。
