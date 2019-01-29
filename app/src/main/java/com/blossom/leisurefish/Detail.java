@@ -185,6 +185,7 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
             isStopUpdatingProgress = false;
             mediaPlayer.start();
             state = PLAYING;
+            new Thread(new UpdateProgressRunnable()).start();
             return;
         }
         isStopUpdatingProgress = false;

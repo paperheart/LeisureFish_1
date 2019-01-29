@@ -11,8 +11,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80d4f1e0-1a65-448e-880d-c4bb93fdd621" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/fishes.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/head.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" afterDir="false" />
@@ -22,13 +20,8 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/CameraActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/CameraActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/Detail.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/Detail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/Gesture.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/VideoPlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/VideoPlay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/nav_header_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/nav_header_main.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,10 +40,10 @@
     <session id="-1874006485">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.open.time.6" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -72,14 +65,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gradle" value="2" />
-          <entry key="java" value="2374" />
+          <entry key="java" value="2377" />
           <entry key="xml" value="363" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="2" />
-          <entry key="JAVA" value="2374" />
+          <entry key="JAVA" value="2377" />
           <entry key="XML" value="363" />
         </counts>
       </usages-collector>
@@ -90,7 +83,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/CameraActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
+            <state relative-caret-position="589">
               <caret line="62" column="48" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
             </state>
           </provider>
@@ -99,18 +92,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/Detail.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1311">
-              <caret line="141" selection-start-line="141" selection-end-line="141" />
+            <state relative-caret-position="151">
+              <caret line="187" column="61" selection-start-line="187" selection-start-column="61" selection-end-line="187" selection-end-column="61" />
               <folding>
-                <element signature="class#2546:2918" />
-                <element signature="method#start#0;class#Detail#0" />
-                <element signature="method#play#0;class#Detail#0" />
                 <element signature="method#pause#0;class#Detail#0" />
                 <element signature="method#onCompletion#0;class#Detail#0" />
-                <element signature="class#7556:7679" />
-                <element signature="class#7716:7837" />
-                <element signature="class#7872:7992" />
-                <element signature="class#8028:8146" />
                 <element signature="method#onDestroy#0;class#Detail#0" />
                 <element signature="class#UpdateProgressRunnable#0;class#Detail#0" />
                 <element signature="method#onResume#0;class#Detail#0" />
@@ -120,14 +106,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="38">
               <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
-              <folding>
-                <element signature="e#628#646#0" expanded="true" />
-              </folding>
             </state>
           </provider>
           <provider editor-type-id="android-manifest" />
@@ -142,11 +125,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header_main.xml">
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="285">
+            <state relative-caret-position="399">
               <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
-              <folding>
-                <element signature="e#678#703#0" expanded="true" />
-              </folding>
             </state>
           </provider>
           <provider selected="true" editor-type-id="android-designer2" />
@@ -157,25 +137,11 @@
           <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/VideoPlay.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="354" column="46" selection-start-line="354" selection-start-column="46" selection-end-line="354" selection-end-column="46" />
-              <folding>
-                <element signature="e#7716#7717#0" expanded="true" />
-                <element signature="e#7780#7781#0" expanded="true" />
-                <element signature="e#7879#7880#0" expanded="true" />
-                <element signature="e#7940#7941#0" expanded="true" />
-                <element signature="e#8190#8191#0" expanded="true" />
-                <element signature="e#8218#8219#0" expanded="true" />
-                <element signature="e#8345#8346#0" expanded="true" />
-                <element signature="e#8373#8374#0" expanded="true" />
-                <element signature="e#9639#9640#0" expanded="true" />
-                <element signature="e#9726#9727#0" expanded="true" />
-                <element signature="e#10219#12048#0" expanded="true" />
-                <element signature="e#12047#12048#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="266">
+              <caret line="153" column="19" lean-forward="true" selection-start-line="153" selection-start-column="19" selection-end-line="153" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -183,7 +149,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
+            <state relative-caret-position="1121">
               <caret line="95" column="42" selection-start-line="95" selection-start-column="42" selection-end-line="95" selection-end-column="42" />
             </state>
           </provider>
@@ -228,12 +194,12 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/play_video.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/VideoPlay.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/CameraActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/Detail.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/nav_header_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/Detail.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/VideoPlay.java" />
       </list>
     </option>
   </component>
@@ -248,9 +214,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -379,6 +342,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -497,6 +463,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.24530831" />
@@ -514,7 +481,7 @@
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.32907802" />
       <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32907802" />
-      <window_info anchor="bottom" id="Build" order="8" weight="0.38723403" />
+      <window_info anchor="bottom" id="Build" order="8" visible="true" weight="0.38723403" />
       <window_info anchor="bottom" id="Android Profiler" order="9" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
@@ -558,7 +525,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/VideoPlay.java</url>
-          <line>338</line>
+          <line>340</line>
           <properties />
           <option name="timeStamp" value="67" />
         </line-breakpoint>
@@ -600,18 +567,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/heart_gray.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/Gesture.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="741">
-          <caret line="39" column="31" lean-forward="true" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#983#1243#0" expanded="true" />
-            <element signature="e#1242#1243#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/Gesture.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/beans/PostVideoResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-190">
@@ -713,59 +669,66 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/VideoPlay.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="354" column="46" selection-start-line="354" selection-start-column="46" selection-end-line="354" selection-end-column="46" />
-          <folding>
-            <element signature="e#7716#7717#0" expanded="true" />
-            <element signature="e#7780#7781#0" expanded="true" />
-            <element signature="e#7879#7880#0" expanded="true" />
-            <element signature="e#7940#7941#0" expanded="true" />
-            <element signature="e#8190#8191#0" expanded="true" />
-            <element signature="e#8218#8219#0" expanded="true" />
-            <element signature="e#8345#8346#0" expanded="true" />
-            <element signature="e#8373#8374#0" expanded="true" />
-            <element signature="e#9639#9640#0" expanded="true" />
-            <element signature="e#9726#9727#0" expanded="true" />
-            <element signature="e#10219#12048#0" expanded="true" />
-            <element signature="e#12047#12048#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="95" column="42" selection-start-line="95" selection-start-column="42" selection-end-line="95" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://E:/Androidstudio/Sdk/sources/android-28/android/app/Activity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="303">
           <caret line="6224" selection-start-line="6224" selection-end-line="6224" />
-          <folding>
-            <element signature="e#239888#239889#0" expanded="true" />
-            <element signature="e#239942#239943#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/fishes.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/head.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/CameraActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="62" column="48" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header_main.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1121">
+          <caret line="95" column="42" selection-start-line="95" selection-start-column="42" selection-end-line="95" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/Detail.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1311">
-          <caret line="141" selection-start-line="141" selection-end-line="141" />
+        <state relative-caret-position="151">
+          <caret line="187" column="61" selection-start-line="187" selection-start-column="61" selection-end-line="187" selection-end-column="61" />
           <folding>
-            <element signature="class#2546:2918" />
-            <element signature="method#start#0;class#Detail#0" />
-            <element signature="method#play#0;class#Detail#0" />
             <element signature="method#pause#0;class#Detail#0" />
             <element signature="method#onCompletion#0;class#Detail#0" />
-            <element signature="class#7556:7679" />
-            <element signature="class#7716:7837" />
-            <element signature="class#7872:7992" />
-            <element signature="class#8028:8146" />
             <element signature="method#onDestroy#0;class#Detail#0" />
             <element signature="class#UpdateProgressRunnable#0;class#Detail#0" />
             <element signature="method#onResume#0;class#Detail#0" />
@@ -774,50 +737,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/CameraActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/blossom/leisurefish/VideoPlay.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="62" column="48" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
+        <state relative-caret-position="266">
+          <caret line="153" column="19" lean-forward="true" selection-start-line="153" selection-start-column="19" selection-end-line="153" selection-end-column="19" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header_main.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
-          <folding>
-            <element signature="e#678#703#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/fishes.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/head.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
-          <folding>
-            <element signature="e#628#646#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest" />
     </entry>
   </component>
 </project>

@@ -149,6 +149,8 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
             isStopUpdatingProgress = false;
             mediaPlayer.start();
             state = PLAYING;
+            new Thread(new UpdateProgressRunnable()).start();
+
             return;
         }
         isStopUpdatingProgress = false;
