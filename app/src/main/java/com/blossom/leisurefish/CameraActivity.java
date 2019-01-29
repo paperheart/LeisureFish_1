@@ -45,19 +45,18 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     private MediaRecorder mMediaRecorder;
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
-    private int testdegree = 270;
     private ImageButton video_shoot ;
     private ImageButton picture_shoot;
     private ImageButton change_button;
     private Toast mtoast = null;
     private ProgressBar progressBar;
     Intent intent = null;
-    //private com.blossom.leisurefish.CircleButtonView circleButtonView;
     Intent intent_1;
-    boolean islong = false;
     private CountDownTimer mTimer;
     private SeekBar timebar;
     private File file_video;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -207,9 +206,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 public void onTick(long millisUntilFinished) {
                     if (!CameraActivity.this.isFinishing()) {
                         double remainTime =  (millisUntilFinished / 100L);
-
                         timebar.setProgress((int)(remainTime+2));
-                        //Toast.makeText(CameraActivity.this,String.valueOf((int)(remainTime*10)),Toast.LENGTH_LONG).show();
                     }
                 }
 

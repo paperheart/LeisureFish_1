@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
                     Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                     intent.putExtra("USER_NAME",((EditText)findViewById(R.id.et_name)).getText().toString());
                     intent.putExtra("USER_ID",((EditText)findViewById(R.id.et_id)).getText().toString());
-                    Toast.makeText(MainActivity.this, ((EditText)findViewById(R.id.et_name)).getText()+" "+((EditText)findViewById(R.id.et_id)).getText(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, ((EditText)findViewById(R.id.et_name)).getText()+" "+((EditText)findViewById(R.id.et_id)).getText(), Toast.LENGTH_SHORT).show();
                     startActivity(intent);
 
                 }catch (Exception e)

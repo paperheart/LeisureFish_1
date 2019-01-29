@@ -40,8 +40,6 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
     private ImageButton ib_play;
     private TextView user_name;
     private TextView user_id;
-    private TextView currentTime;
-    private TextView totalTime;
     private SurfaceHolder holder;
     private MediaPlayer mediaPlayer = null;
     private SeekBar seekBar;
@@ -53,7 +51,6 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
     private final int NORMAL = 0;
     private final int PLAYING = 1;
     private final int PAUSING = 2;
-    private final int STOPING = 3;
     private TimerTask task = null;
     private boolean touchAble = true;
     private int state = NORMAL;
@@ -97,6 +94,7 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
                 start();
             }
         });
+
         ib_pausing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

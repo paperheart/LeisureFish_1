@@ -119,7 +119,7 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
                 if(state == PLAYING){
                     if(ib_pausing.getVisibility() == View.INVISIBLE){
                         ib_pausing.setVisibility(View.VISIBLE);
-                        //handlerPause.postDelayed(runnablePause,2000);
+                        handlerPause.postDelayed(runnablePause,2000);
                     }
                     else{
                         ib_pausing.setVisibility(View.INVISIBLE);
@@ -128,7 +128,7 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
                 else{
                     if(ib_play.getVisibility() == View.INVISIBLE){
                         ib_play.setVisibility(View.VISIBLE);
-                        //handlerPlay.postDelayed(runnablePlay,2000);
+                        handlerPlay.postDelayed(runnablePlay,2000);
                     }
                     else{
                         ib_play.setVisibility(View.INVISIBLE);
@@ -258,7 +258,6 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        Toast.makeText(VideoPlay.this, "touched", Toast.LENGTH_SHORT).show();
         switch(event.getAction())
         {
             case MotionEvent.ACTION_DOWN:pre_posx = event.getX();pre_posy = event.getY();break;
@@ -324,9 +323,6 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
 
                 Uri uri = Uri.fromFile(pictureFile);
                 mSelectedImage = Uri.fromFile(pictureFile);
-                progressBar.setVisibility(View.INVISIBLE);
-
-                Uri myuri = mSelectedImage;
                 Call<PostVideoResponse> call = iMiniDouyinService.creatVideo(id,name,
                         getMultipartFromUri("cover_image",mSelectedImage),
                         getMultipartFromUri("video",mSelectedVideo));
@@ -354,10 +350,9 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Log.d(TAG, "run() called");
-                             Toast.makeText(VideoPlay.this.getApplicationContext(),String.valueOf(0),Toast.LENGTH_LONG).show();
-                             textView.setText("failed");
-
+                                if(mtoast != null) mtoast.cancel();
+                                mtoast = Toast.makeText(VideoPlay.this, "上传成功", Toast.LENGTH_SHORT);
+                                mtoast.show();
                                 progressBar.setVisibility(View.INVISIBLE);
                                 Flingable = true;
                             }
