@@ -3,6 +3,7 @@ package com.blossom.leisurefish;
 import android.content.Intent;
 import android.gesture.GestureOverlayView;
 import android.graphics.Bitmap;
+import android.icu.text.UnicodeSetSpanner;
 import android.media.AudioManager;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
@@ -24,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.GestureDetector.OnGestureListener;
 
@@ -67,11 +69,15 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
     private GestureDetector mGestureDetector;
     private boolean touchAble = true;
     private int state = NORMAL;
+    private float cur_posx,cur_posy,pre_posx,pre_posy;
     private boolean isStopUpdatingProgress = false;
+    private Toast mtoast = null;
+    private TextView textView;
+
     public Intent intent;
     public String url;
-    private RelativeLayout relativeLayout;
     private boolean Flingable = true;
+    private String TAG = "TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,11 +90,10 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
         seekBar = findViewById(R.id.sb_1);
         intent=getIntent();
         progressBar = findViewById(R.id.progress_circular);
-
         url = intent.getStringExtra("URLforVideo");
         name = getIntent().getStringExtra("USER_NAME");
         id = getIntent().getStringExtra("USER_ID");
-
+        textView = findViewById(R.id.textView);
         mSelectedVideo = Uri.parse("file://"+url);
 
         ib_play.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +119,7 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
                 if(state == PLAYING){
                     if(ib_pausing.getVisibility() == View.INVISIBLE){
                         ib_pausing.setVisibility(View.VISIBLE);
-                        handlerPause.postDelayed(runnablePause,2000);
+                        //handlerPause.postDelayed(runnablePause,2000);
                     }
                     else{
                         ib_pausing.setVisibility(View.INVISIBLE);
@@ -123,7 +128,7 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
                 else{
                     if(ib_play.getVisibility() == View.INVISIBLE){
                         ib_play.setVisibility(View.VISIBLE);
-                        handlerPlay.postDelayed(runnablePlay,2000);
+                        //handlerPlay.postDelayed(runnablePlay,2000);
                     }
                     else{
                         ib_play.setVisibility(View.INVISIBLE);
@@ -134,11 +139,9 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
         });
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        relativeLayout = findViewById(R.id.RL);
         mGestureDetector = new GestureDetector(this);
         surfaceView.setOnTouchListener(this);
         surfaceView.setLongClickable(true);
-
     }
 
     public void start(){
@@ -226,9 +229,7 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
     }
 
     @Override
-    public void onShowPress(MotionEvent e) {
-        Log.d("Text","Touched");
-    }
+    public void onShowPress(MotionEvent e) { }
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
@@ -247,33 +248,6 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if(velocityY < -5000 && Math.abs(velocityX)<6000 && Flingable)
-        {
-            Flingable = false;
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    progressBar.setVisibility(View.VISIBLE);
-                }
-            });
-            MediaMetadataRetriever media = new MediaMetadataRetriever();
-            media.setDataSource(url);
-            Bitmap bitmap = media.getFrameAtTime();
-            File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-            try {
-                FileOutputStream out = new FileOutputStream(pictureFile);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 50, out);
-                out.flush();
-                out.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mSelectedImage = Uri.fromFile(pictureFile);
-            postVideo();
-        }
-        Log.d("Text",String.valueOf(velocityX)+" "+String.valueOf(velocityY));
         return false;
     }
 
@@ -284,8 +258,30 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        Log.d("Text","touched on onTouch");
-        return mGestureDetector.onTouchEvent(event);
+        Toast.makeText(VideoPlay.this, "touched", Toast.LENGTH_SHORT).show();
+        switch(event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:pre_posx = event.getX();pre_posy = event.getY();break;
+            case MotionEvent.ACTION_MOVE:cur_posx = event.getX();cur_posy = event.getY();break;
+            case MotionEvent.ACTION_UP:  if(cur_posy<pre_posy&&Math.abs(cur_posx-pre_posx)<Math.abs(cur_posy-pre_posy)&&Flingable)
+            {
+                Flingable = false;
+               runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+                });
+
+                postVideo();
+            }break;
+            case MotionEvent.ACTION_BUTTON_PRESS:
+            {
+
+            }
+        }
+        return false;
+        //return mGestureDetector.onTouchEvent(event);
     }
 
     class UpdateProgressRunnable implements Runnable {
@@ -308,11 +304,29 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         final IMiniDouyinService iMiniDouyinService = retrofit.create(IMiniDouyinService.class);
-        Log.d("aaa","2");
         new Thread(){
             @Override public void run(){
+                MediaMetadataRetriever media = new MediaMetadataRetriever();
+                media.setDataSource(url);
+                Bitmap bitmap = media.getFrameAtTime();
+                File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+                try {
+                    FileOutputStream out = new FileOutputStream(pictureFile);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, out);
+                    out.flush();
+                    out.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                Uri myuri = mSelectedVideo;
+
+                Uri uri = Uri.fromFile(pictureFile);
+                mSelectedImage = Uri.fromFile(pictureFile);
+                progressBar.setVisibility(View.INVISIBLE);
+
+                Uri myuri = mSelectedImage;
                 Call<PostVideoResponse> call = iMiniDouyinService.creatVideo(id,name,
                         getMultipartFromUri("cover_image",mSelectedImage),
                         getMultipartFromUri("video",mSelectedVideo));
@@ -324,7 +338,10 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(VideoPlay.this, "Video "+name+" "+id, Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "run() called");
+                                if(mtoast != null) mtoast.cancel();
+                                mtoast = Toast.makeText(VideoPlay.this, "上传成功", Toast.LENGTH_SHORT);
+                                mtoast.show();
                                 progressBar.setVisibility(View.INVISIBLE);
                                 Flingable = true;
                             }
@@ -337,7 +354,10 @@ public class VideoPlay extends AppCompatActivity implements MediaPlayer.OnComple
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(VideoPlay.this, "上传失败", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "run() called");
+                             Toast.makeText(VideoPlay.this.getApplicationContext(),String.valueOf(0),Toast.LENGTH_LONG).show();
+                             textView.setText("failed");
+
                                 progressBar.setVisibility(View.INVISIBLE);
                                 Flingable = true;
                             }

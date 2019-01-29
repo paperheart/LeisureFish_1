@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.ContentFrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.ContentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".Detail">
 
@@ -21,13 +21,16 @@
         android:visibility="invisible"
         style="@style/mProgress_circle"/>
 
-    <ImageButton
-        android:id="@+id/ib_love"
-        android:background="@drawable/heart_red"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_likeanim"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        app:lottie_fileName="heart.json"
+        app:lottie_loop="false"
+        app:lottie_autoPlay="false"
         android:visibility="invisible"
-       />
+        />
+
 
     <ImageButton
         android:id="@+id/ib_pause"

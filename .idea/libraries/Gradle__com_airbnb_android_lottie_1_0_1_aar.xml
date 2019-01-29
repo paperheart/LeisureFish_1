@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.airbnb.android:lottie:1.0.1@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/lottie-1.0.1.aar/d0438bc020be57267c2b8c3da6968668/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/lottie-1.0.1.aar/d0438bc020be57267c2b8c3da6968668/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.airbnb.android/lottie/1.0.1/32fb9a8892595dd1cd64cba7eb4ec1fac7ca9bd4/lottie-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,9 +1,12 @@
 package com.blossom.leisurefish;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -16,10 +19,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -44,6 +49,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     private ImageButton video_shoot ;
     private ImageButton picture_shoot;
     private ImageButton change_button;
+    private Toast mtoast = null;
+    private ProgressBar progressBar;
+    Intent intent = null;
     //private com.blossom.leisurefish.CircleButtonView circleButtonView;
     Intent intent_1;
     boolean islong = false;
@@ -56,6 +64,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.camera_activity);
+
         intent_1 = getIntent();
         name = intent_1.getStringExtra("USER_NAME");
         id = intent_1.getStringExtra("USER_ID");
@@ -65,7 +74,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         mSurfaceView = findViewById(R.id.surView);
         change_button = findViewById(R.id.change);
         timebar = findViewById(R.id.timebar);
-
+        progressBar = findViewById(R.id.cir);
         SurfaceHolder holder = mSurfaceView.getHolder();
         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         holder.addCallback(this);
@@ -96,21 +105,29 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 mCamera.lock();
                 timebar.setProgress(0);
                 mTimer.cancel();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.VISIBLE);
+                        progressBar.setPressed(true);
+                    }
+                });
 
-
-
-                Toast.makeText(CameraActivity.this, "Camera  "+name+" "+id, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(CameraActivity.this,VideoPlay.class);
+                //Toast.makeText(CameraActivity.this, "Camera  "+name+" "+id, Toast.LENGTH_SHORT).show();
+                intent = new Intent(CameraActivity.this,VideoPlay.class);
                 intent.putExtra("URLforVideo",file_video.getAbsolutePath().toString());
                 intent.putExtra("USER_NAME",name);
                 intent.putExtra("USER_ID",id);
-
                 startActivity(intent);
                 finish();
 
-                Toast.makeText(CameraActivity.this, "over!", Toast.LENGTH_LONG).show();
+                if(mtoast != null) mtoast.cancel();
+                mtoast = Toast.makeText(CameraActivity.this, "over!", Toast.LENGTH_LONG);
+                mtoast.show();
             } else {
-                Toast.makeText(CameraActivity.this, "start!", Toast.LENGTH_LONG).show();
+                if(mtoast != null) mtoast.cancel();
+                mtoast = Toast.makeText(CameraActivity.this, "start!", Toast.LENGTH_LONG);
+                mtoast.show();
                 video_shoot.setBackgroundResource(R.drawable.stop);
                 mTimer.start();
                 change_button.setClickable(false);
@@ -173,6 +190,13 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             mCamera.takePicture(null,null,mPicture) ;
 
         });
+
+        findViewById(R.id.surView).setOnClickListener(v -> {
+            auto();
+            if(mtoast != null) mtoast.cancel();
+            mtoast = Toast.makeText(CameraActivity.this,"auto!",Toast.LENGTH_LONG);
+            mtoast.show();
+        });
         initView();
     }
     private void initView() {
@@ -191,7 +215,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
                 @Override
                 public void onFinish() {
-                    Toast.makeText(CameraActivity.this, "over!", Toast.LENGTH_LONG).show();
+                    if(mtoast != null) mtoast.cancel();
+                    mtoast = Toast.makeText(CameraActivity.this, "over!", Toast.LENGTH_LONG);
+                    mtoast.show();
                     video_shoot.setBackgroundResource(R.drawable.start);
                     isRecording = false;
                     change_button.setClickable(true);
@@ -200,12 +226,19 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     mCamera.lock();
                     timebar.setProgress(0);
 
-                    Intent intent = new Intent(CameraActivity.this,VideoPlay.class);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setVisibility(View.VISIBLE);
+                            progressBar.setPressed(true);
+                        }
+                    });
+                    intent = new Intent(CameraActivity.this,VideoPlay.class);
                     intent.putExtra("URLforVideo",file_video.getAbsolutePath().toString());
+                    intent.putExtra("USER_NAME",name);
+                    intent.putExtra("USER_ID",id);
                     startActivity(intent);
                     finish();
-
-                    Toast.makeText(CameraActivity.this, "over!", Toast.LENGTH_LONG).show();
                 }
             };
 
@@ -289,7 +322,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
         }catch (Exception e)
         {
-            Toast.makeText(CameraActivity.this,"failed", LENGTH_LONG).show();
+            if(mtoast != null) mtoast.cancel();
+            mtoast = Toast.makeText(CameraActivity.this, "RuntimeError!", Toast.LENGTH_LONG);
+            mtoast.show();
         }
 
         return cam;
@@ -331,17 +366,18 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                 parameters.setPreviewSize(size.width, size.height);
                 mCamera.setParameters(parameters);
                 //自动调焦
-                Camera.Parameters params = mCamera.getParameters();
-                if (params.getSupportedFocusModes().contains(
-                        Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
-                    params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-                }
-                mCamera.setParameters(params);
-                Toast.makeText(CameraActivity.this, "auto!", Toast.LENGTH_LONG).show();
+                auto();
             }
         });
     }
-
+    private void auto(){
+        Camera.Parameters params = mCamera.getParameters();
+        if (params.getSupportedFocusModes().contains(
+                Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+            params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+        }
+        mCamera.setParameters(params);
+    }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {

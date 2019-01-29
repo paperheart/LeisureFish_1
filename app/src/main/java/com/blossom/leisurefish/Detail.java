@@ -1,5 +1,6 @@
 package com.blossom.leisurefish;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -19,6 +20,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.airbnb.lottie.LottieAnimationView;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -59,6 +62,9 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
     private ImageButton love;
     private Intent intent;
     private  Timer mtimer = new Timer();
+    private LottieAnimationView lottieLike;
+    private boolean isThisActivity = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +79,11 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
         holder = surfaceView.getHolder();
         seekBar = findViewById(R.id.sb_1);
         progressBar = findViewById(R.id.pb_1);
-        love = findViewById(R.id.ib_love);
+        lottieLike = findViewById(R.id.lottie_likeanim);
+        isThisActivity = true;
+        ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f)
+                .setDuration(1000);
+
 
         ib_play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,14 +119,24 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
                     mtimer.cancel();
                     task.cancel();
                     mtimer = new Timer();
-                    love.setX(event.getX()-100);
-                    love.setY(event.getY()-100);
-                    love.setVisibility(VISIBLE);
+                    lottieLike.setX(event.getX());
+                    lottieLike.setY(event.getY());
+                    lottieLike.setVisibility(VISIBLE);
+                    animator.addUpdateListener(animation -> {
+                        //通过由0->1的变化模拟动画播放
+                        lottieLike.setProgress((Float) animation.getAnimatedValue());
+                    });
+                    animator.start();
+
+
                     new Handler().postDelayed(new Runnable(){
                         public void run() {
-                            love.setVisibility(INVISIBLE);
+
+                            lottieLike.setVisibility(INVISIBLE);
+                            //lottieLike.cancelAnimation();
                         }
                     },2000);
+
 
                 }
                 else
@@ -223,7 +243,6 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        //Toast.makeText(this,"Finished,play again",Toast.LENGTH_SHORT).show();
         state = PLAYING;
         mediaPlayer.start();
     }
@@ -271,15 +290,35 @@ public class Detail extends AppCompatActivity implements MediaPlayer.OnCompletio
 
         @Override
         public void run() {
-            while (!isStopUpdatingProgress) {
-                int currentPosition = mediaPlayer.getCurrentPosition();
-                seekBar.setProgress(currentPosition);
-                SystemClock.sleep(100);
+            try{
+                while (!isStopUpdatingProgress) {
+                    int currentPosition = mediaPlayer.getCurrentPosition();
+                    seekBar.setProgress(currentPosition);
+                    SystemClock.sleep(100);
+                }
             }
+            catch (Exception e) {
+                mediaPlayer.release();
+                mediaPlayer = null;
+                isStopUpdatingProgress = true;
+            }
+
 
         }
 
     }
+    @Override
+    public void onResume() {
+        isThisActivity = true;
+        super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        isThisActivity = false;
+        super.onStop();
+    }
+
 
 
 }
